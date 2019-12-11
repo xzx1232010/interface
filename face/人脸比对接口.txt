@@ -1,0 +1,42 @@
+人脸比对接口说明：
+
+1.接口是一个web接口，用request.post方法请求(url方式)
+
+2.传给的是RGB形式图片，再打包成base64的格式
+
+4.url也得添加一个用户名和密码，这个用来进行验证的。
+
+5.例子。
+	data={}
+	data['username']='reocar' #添加用户名
+	data['password']='reocar666' #添加密码
+	data['ID_pic']=image_1 #base64格式的的身份证图
+	data['half_pic']=image_1 #base64格式的的半身照图
+	url='http://face-recognize9.stagpx.reocar.com/face/'      
+	res = requests.post(url=url,data=data)  
+	answer=res.json()#获得访问的结果
+
+6.访问地址形式。
+
+  url形式：'http://face-recognize9.stagpx.reocar.com/face/'
+  用户名：reocar
+  密码：reocar666
+
+7.访问结果是以json的格式返回的.
+	识别成功：返回四个结果，'ID_fail_reason':200(身份证识别成功),
+						 'half_fail_reason':200(半身照识别成功),
+						 'distince':0.348333(一个float值，代表着身份证和半身照的相似度，范围为0到1，值越小越相似),
+						 'recognize':True 或 False(True代表同一个人，False代表不是同一个人)
+
+	识别失败：返回两个结果，'ID_fail_reason':401(身份证识别失败),
+						 'half_fail_reason':200(半身照识别成功，401代表识别失败)
+
+8.返回时间
+	返回时间有点长，跟图片大小有关系，且用的是CPU跑图片，平均5-8秒返回一次。
+
+9.'失败原因.docx' ,这文件讲解了一些识别失败的原因。
+
+10.精度问题：
+   a.跟拍摄是否规范有很大关联，参考上一条。
+   b.高分辨率的图片，识别的越准确，但同时识别速度越慢
+   

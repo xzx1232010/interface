@@ -1,0 +1,10 @@
+FROM xiasan/face:2.0
+ENV HOME /home
+WORKDIR $HOME
+ADD face /home/xiasan/face/face
+ADD uwsgi.ini /home/xiasan/face
+ADD nginx.conf /etc/nginx/nginx.conf
+ADD start.sh /home
+EXPOSE 3000
+CMD sh start.sh
+
